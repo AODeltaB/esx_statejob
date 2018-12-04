@@ -76,13 +76,9 @@ Config.StateStations = {
 	  Heading    = 3.36,
     },
 	
-	EnterGouv = {
-		{ x = 136.169, y = -761.737, z = 45.400 },
-	},
+	EnterGouv = {x=136.169,y=-761.737,z=44.600},
 
-	ExitGouv = {
-		{ x = 136.169, y = -761.737, z = 241.800 },
-	},
+	ExitGouv = {x=136.169,y=-761.737,z=240.800},
   },
   
 }

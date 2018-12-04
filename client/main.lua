@@ -23,8 +23,7 @@ local CurrentActionData         = {}
 local IsHandcuffed              = false
 local IsDragged                 = false
 local CopPed                    = 0
-local coord1 = {x=136.169,y=-761.737,z=45.400}
-local coord2 = {x=136.169,y=-761.737,z=241.800}
+
 
 ESX                             = nil
 GUI.Time                        = 0
@@ -1468,20 +1467,19 @@ Citizen.CreateThread(function()
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString(_U('map_blip'))
     EndTextCommandSetBlipName(blip)
-
+	
   
   while true do
 		Citizen.Wait(0)
-		DrawMarker(1,coord1.x,coord1.y,coord1.z,0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-		DrawMarker(1,coord2.x,coord2.y,coord2.z,0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-
-		if(isNear(coord1)) then
+		DrawMarker(1,v.EnterGouv.x,v.EnterGouv.y,v.EnterGouv.z,0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+		DrawMarker(1,v.ExitGouv.x,v.ExitGouv.y,v.ExitGouv.z,0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+		if(isNear(v.EnterGouv)) then
 		if PlayerData.job ~= nil and PlayerData.job.name == 'state' then
 				Info("Appuyez sur ~INPUT_PICKUP~ pour monter à l'étage.")
 
 				if(IsControlJustPressed(1, 38)) then
 					Citizen.Wait(0)
-					SetEntityCoords(GetPlayerPed(-1),coord2.x,coord2.y,coord2.z)
+					SetEntityCoords(GetPlayerPed(-1),v.ExitGouv.x,v.ExitGouv.y,v.ExitGouv.z)
 				end
 			else
 				Info("Appuyez sur ~INPUT_PICKUP~ pour sonner.")
@@ -1492,12 +1490,12 @@ Citizen.CreateThread(function()
 			end
 		end
 
-		if(isNear(coord2)) then
+		if(isNear(v.ExitGouv)) then
 			Info("Appuyez sur ~INPUT_PICKUP~ pour descendre au rez-de-chaussée.")
 
 			if(IsControlJustPressed(1, 38)) then
 				Citizen.Wait(0)
-				SetEntityCoords(GetPlayerPed(-1),coord1.x,coord1.y,coord1 .z)
+				SetEntityCoords(GetPlayerPed(-1),v.EnterGouv.x,v.EnterGouv.y,v.EnterGouv.z)
 			end
 		end
 	end
@@ -1603,7 +1601,7 @@ RegisterNetEvent("esx_statejob:sendStatus")
 AddEventHandler("esx_statejob:sendStatus", function(status)
 	if(status == 1) then
 		SendNotification("~g~Quelqu'un est venu vous ouvrir la porte !")
-		SetEntityCoords(GetPlayerPed(-1),coord2.x,coord2.y,coord2.z)
+		SetEntityCoords(GetPlayerPed(-1),v.ExitGouv.x,v.ExitGouv.y,v.ExitGouv.z)
 	else
 		SendNotification("~r~Personne n'a voulu vous ouvrir la porte.")
 	end
